@@ -2,11 +2,11 @@ import streamlit as st
 
 st.set_page_config(
     page_title="OfficerPath",
-    page_icon="🛡️",
+    page_icon="🪖",
     layout="wide"
 )
 
-st.title("🛡️ OFFICER PATH")
+st.title("🪖 OFFICER PATH")
 st.subheader("AI-Powered Defence Aspirant Performance Management System")
 
 st.markdown("""
