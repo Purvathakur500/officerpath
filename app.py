@@ -1,24 +1,34 @@
 import streamlit as st
+from database.queries import add_user, get_users
 
-st.set_page_config(
-    page_title="OfficerPath",
-    page_icon="🪖",
-    layout="wide"
+st.set_page_config(page_title="OfficerPath", page_icon="🛡️")
+
+st.title("🛡️ OfficerPath")
+st.subheader("Defence Aspirant Registration")
+
+name = st.text_input("Enter your Name")
+
+target_exam = st.selectbox(
+    "Select Target Exam",
+    ["NDA","CDS", "AFCAT", "CAPF"]
 )
 
-st.title("🪖 OFFICER PATH")
-st.subheader("AI-Powered Defence Aspirant Performance Management System")
+if st.button("Register"):
 
-st.markdown("""
-OfficerPath is an AI-powered platform designed for **NDA,CDS, AFCAT, and CAPF** aspirants.
+    if name.strip() == "":
+        st.error("Please enter your name.")
 
-### Features
-- 📚 Study Planner
-- 📝 Mock Test Analytics
-- 📖 PYQ Performance Tracker
-- 💪 Fitness Tracker
-- 🤖 AI Performance Reports
+    else:
+        add_user(name, target_exam)
+        st.success("Registration Successful!")
 
----
-🚧 **Project under development** (Summer Bootcamp 2026)
-""")
+st.divider()
+
+st.subheader("Registered Users")
+
+users = get_users()
+
+for user in users:
+    st.write(
+        f"👤 {user[1]} | 🎯 {user[2]}"
+    )
