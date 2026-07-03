@@ -1,9 +1,6 @@
 import streamlit as st
-from database.queries import (
-    add_user,
-    add_study_session,
-    get_study_sessions
-)
+from pages.registration import registration_page
+from pages.dashboard import dashboard_page
 
 st.set_page_config(
     page_title="OfficerPath",
@@ -11,134 +8,61 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("🛡️ OfficerPath")
-st.caption("AI-Powered Defence Aspirant Companion")
-st.divider()
+# --------------------------
+# Session State
+# --------------------------
 
-# =========================
-# Registration + Dashboard
-# =========================
+if "registered" not in st.session_state:
+    st.session_state.registered = False
 
-left_col, right_col = st.columns([2, 1])
+if "username" not in st.session_state:
+    st.session_state.username = ""
 
-with left_col:
+if "target_exam" not in st.session_state:
+    st.session_state.target_exam = ""
 
-    st.subheader("👤 Register")
+# --------------------------
+# Routing
+# --------------------------
 
-    name = st.text_input("Enter your Name")
+from database.queries import get_all_users
 
-    target_exam = st.selectbox(
-        "Target Exam",
-        [
-            "Select Exam",
-            "CDS",
-            "AFCAT",
-            "CAPF"
-        ]
-    )
+users = get_all_users()
 
-    if st.button("🚀 Start Journey"):
+if not st.session_state.registered:
 
-        if name.strip() == "":
-            st.error("Please enter your name.")
+    st.title("🛡️ OfficerPath")
 
-        elif target_exam == "Select Exam":
-            st.error("Please select your target exam.")
+    if users:
 
-        else:
-            add_user(name, target_exam)
-            st.success(f"Welcome {name}! 🎉")
+        user_names = [
+            f"{user[1]} ({user[2]})"
+            for user in users
+            ]
 
-with right_col:
-
-    st.subheader("📊 Dashboard")
-
-    st.info("Start your preparation journey today!")
-
-    st.metric("📚 Study Sessions", len(get_study_sessions()))
-
-st.divider()
-
-# =========================
-# Study Tracker
-# =========================
-
-st.subheader("📚 Study Tracker")
-
-subject = st.selectbox(
-    "Subject",
-    [
-        "Select Subject",
-        "Maths",
-        "English",
-        "Reasoning",
-        "GK",
-        "Science"
-        "Other"
-    ]
-)
-
-task_type = st.selectbox(
-    "Task Type",
-    [
-        "Select Task",
-        "Lecture",
-        "Revision",
-        "PYQ Practice",
-        "Mock Test",
-        "Current Affairs",
-        "Notes"
-    ]
-)
-
-duration = st.number_input(
-    "Duration (minutes)",
-    min_value=1,
-    max_value=600,
-    value=60
-)
-
-if st.button("➕ Add Study Session"):
-
-    if subject == "Select Subject":
-        st.error("Please select a subject.")
-
-    elif task_type == "Select Task":
-        st.error("Please select a task.")
-
-    else:
-
-        # Assuming user_id = 1 for MVP
-        add_study_session(
-            1,
-            subject,
-            task_type,
-            duration
+        selected_user = st.selectbox(
+            "Select Existing User",
+            user_names
         )
 
-        st.success("Study session added successfully! ✅")
+        if st.button("Continue"):
 
-st.divider()
+            selected = next(
+                user for user in users
+                if f"{user[1]} ({user[2]})" == selected_user
+                )
+            
 
-# =========================
-# Study History
-# =========================
+            st.session_state.user_id = selected[0]
+            st.session_state.username = selected[1]
+            st.session_state.registered = True
 
-st.subheader("📖 Recent Study Sessions")
+            st.rerun()
 
-sessions = get_study_sessions()
+    st.divider()
 
-if sessions:
-
-    for session in sessions:
-
-        st.container(border=True)
-
-        st.write(f"📚 **Subject:** {session[0]}")
-        st.write(f"📝 **Task:** {session[1]}")
-        st.write(f"⏱ **Duration:** {session[2]} minutes")
-        st.write("---")
+    if st.button("➕ Register New User"):
+        registration_page()
 
 else:
-
-    st.info("No study sessions found.")
+    dashboard_page()
