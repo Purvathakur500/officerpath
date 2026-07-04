@@ -15,3 +15,12 @@ CREATE TABLE IF NOT EXISTS StudySessions (
     FOREIGN KEY (user_id)
     REFERENCES Users(user_id)
 );
+CREATE TABLE IF NOT EXISTS MockResults (
+    result_id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES Users(user_id),
+    subject VARCHAR(50),
+    score INTEGER,
+    total_questions INTEGER,
+    percentage DECIMAL(5,2),
+    test_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

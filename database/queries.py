@@ -119,3 +119,95 @@ def get_all_users():
     connection.close()
 
     return users
+def save_mock_result(
+    user_id,
+    subject,
+    score,
+    total_questions,
+    percentage
+):
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    query = """
+    INSERT INTO MockResults
+    (user_id, subject, score, total_questions, percentage)
+    VALUES (%s, %s, %s, %s, %s);
+    """
+
+    cursor.execute(
+        query,
+        (
+            user_id,
+            subject,
+            score,
+            total_questions,
+            percentage
+        )
+    )
+
+    connection.commit()
+
+    cursor.close()
+    connection.close()
+def get_mock_results(user_id):
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    query = """
+    SELECT subject,
+           score,
+           total_questions,
+           percentage,
+           test_date
+    FROM MockResults
+    WHERE user_id = %s
+    ORDER BY test_date DESC;
+    """
+
+    cursor.execute(query, (user_id,))
+
+    results = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    return results
+from datetime import date, timedelta
+
+def get_streak(user_id):
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT DISTINCT DATE(study_date)
+        FROM StudySessions
+        WHERE user_id = %s
+        ORDER BY DATE(study_date) DESC;
+    """, (user_id,))
+
+    dates = [row[0] for row in cursor.fetchall()]
+
+    cursor.close()
+    connection.close()
+
+    if not dates:
+        return 0
+
+    streak = 0
+    current_day = date.today()
+
+    for d in dates:
+
+        if d == current_day:
+            streak += 1
+            current_day -= timedelta(days=1)
+
+        elif d == current_day - timedelta(days=1) and streak == 0:
+            streak += 1
+            current_day = d - timedelta(days=1)
+
+        else:
+            break
+
+    return streak

@@ -40,5 +40,5 @@ def registration_page():
             st.session_state.user_id = user_id
             st.session_state.username = name
             st.session_state.target_exam = target_exam
-
+            st.session_state.show_registration=False
             st.rerun()
