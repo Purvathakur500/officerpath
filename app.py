@@ -3,6 +3,9 @@ import streamlit as st
 from pages.registration import registration_page
 from pages.dashboard import dashboard_page
 from database.queries import get_all_users
+from pages.practice_pyq import pyq_page
+from pages.fitness import fitness_page
+from pages.ai_planner import ai_planner_page
 
 st.set_page_config(
     page_title="OfficerPath",
@@ -26,23 +29,30 @@ if "username" not in st.session_state:
 
 if "target_exam" not in st.session_state:
     st.session_state.target_exam = ""
+if "pyq_page" not in st.session_state:
+    st.session_state.pyq_page = False
+if "fitness_page" not in st.session_state:
+    st.session_state.fitness_page = False
+if "ai_page" not in st.session_state:
+    st.session_state.ai_page = False
 
 
 # =====================================================
 # DASHBOARD
 # =====================================================
-
-if st.session_state.registered:
+if st.session_state.pyq_page:
+    pyq_page()
+elif st.session_state.fitness_page:
+    fitness_page()
+elif st.session_state.ai_page:
+    ai_planner_page()
+elif st.session_state.registered:
 
     dashboard_page()
 
 # =====================================================
 # REGISTRATION PAGE
 # =====================================================
-
-elif st.session_state.show_registration:
-
-    registration_page()
 
 # =====================================================
 # HOME PAGE
@@ -90,3 +100,6 @@ else:
         st.session_state.show_registration = True
 
         st.rerun()
+    if st.session_state.show_registration:
+
+        registration_page()

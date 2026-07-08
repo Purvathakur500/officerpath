@@ -211,3 +211,195 @@ def get_streak(user_id):
             break
 
     return streak
+def save_pyq_result(
+    user_id,
+    exam,
+    score,
+    total_questions,
+    percentage
+):
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    query = """
+    INSERT INTO PYQResults
+    (user_id, exam, score, total_questions, percentage)
+    VALUES (%s, %s, %s, %s, %s);
+    """
+
+    cursor.execute(
+        
+        query,
+        (
+            user_id,
+            exam,
+            score,
+            total_questions,
+            percentage
+        )
+    )
+
+    connection.commit()
+
+    cursor.close()
+    connection.close()
+def get_pyq_results(user_id):
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    query = """
+    SELECT exam,
+           score,
+           total_questions,
+           percentage,
+           test_date
+    FROM PYQResults
+    WHERE user_id = %s
+    ORDER BY test_date DESC;
+    """
+
+    cursor.execute(query, (user_id,))
+
+    results = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    return results
+from datetime import date, timedelta
+def save_fitness_log(
+    user_id,
+    run_km,
+    pushups,
+    situps,
+    pullups,
+    plank_seconds
+):
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    query = """
+    INSERT INTO FitnessLog
+    (user_id, run_km, pushups, situps, pullups, plank_seconds)
+    VALUES (%s, %s, %s, %s, %s, %s);
+    """
+
+    cursor.execute(
+        query,
+        (
+            user_id,
+            run_km,
+            pushups,
+            situps,
+            pullups,
+            plank_seconds
+        )
+    )
+
+    connection.commit()
+
+    cursor.close()
+    connection.close()
+def get_fitness_history(user_id):
+
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    query = """
+    SELECT
+        run_km,
+        pushups,
+        situps,
+        pullups,
+        plank_seconds,
+        workout_date
+    FROM FitnessLog
+    WHERE user_id = %s
+    ORDER BY workout_date DESC;
+    """
+
+    cursor.execute(query, (user_id,))
+
+    results = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    return results
+def get_fitness_stats(user_id):
+
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    query = """
+    SELECT
+        COALESCE(SUM(run_km),0),
+        COALESCE(SUM(pushups),0),
+        COUNT(*)
+    FROM FitnessLog
+    WHERE user_id = %s;
+    """
+
+    cursor.execute(query, (user_id,))
+
+    result = cursor.fetchone()
+
+    cursor.close()
+    connection.close()
+
+    return result
+def save_study_plan(
+    user_id,
+    exam,
+    months_left,
+    study_hours,
+    weak_subject,
+    generated_plan
+):
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    query = """
+    INSERT INTO StudyPlans
+    (user_id, exam, months_left, study_hours, weak_subject, generated_plan)
+    VALUES (%s, %s, %s, %s, %s, %s);
+    """
+
+    cursor.execute(
+        query,
+        (
+            user_id,
+            exam,
+            months_left,
+            study_hours,
+            weak_subject,
+            generated_plan
+        )
+    )
+
+    connection.commit()
+
+    cursor.close()
+    connection.close()
+    
+def get_latest_study_plan(user_id):
+
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    query = """
+    SELECT generated_plan, created_at
+    FROM StudyPlans
+    WHERE user_id = %s
+    ORDER BY created_at DESC
+    LIMIT 1;
+    """
+
+    cursor.execute(query, (user_id,))
+
+    result = cursor.fetchone()
+
+    cursor.close()
+    connection.close()
+
+    return result

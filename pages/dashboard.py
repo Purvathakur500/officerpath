@@ -205,4 +205,29 @@ def dashboard_page():
                 st.write(f"📅 Date : {result[4]}")
     else:
         st.info("No mock tests attempted yet.")
+    st.divider()
+
+    st.subheader("📚 PYQ Practice")
+    st.caption("Practice Previous Year Questions for NDA, CDS, AFCAT & CAPF.")
+
+    if st.button("🚀 Open PYQ Practice", use_container_width=True):
+        st.session_state.pyq_page = True
+        st.rerun()  
+    
+    st.divider()
+
+    st.subheader("💪 Fitness Tracker")
+    st.caption("Track your physical preparation for defence exams.")
+
+    if st.button("🏋 Open Fitness Tracker", use_container_width=True):
+        st.session_state.fitness_page = True
+        st.rerun()   
+    st.divider()
+
+    st.subheader("🤖 AI Study Planner")
+    st.caption("Generate a personalized defence preparation plan.")
+
+    if st.button("🧠 Open AI Planner", use_container_width=True):
+        st.session_state.ai_page = True
+        st.rerun()
             

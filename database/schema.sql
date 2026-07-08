@@ -24,3 +24,12 @@ CREATE TABLE IF NOT EXISTS MockResults (
     percentage DECIMAL(5,2),
     test_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+CREATE TABLE PYQResults (
+    result_id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES Users(user_id),
+    exam VARCHAR(50),
+    score INTEGER,
+    total_questions INTEGER,
+    percentage DECIMAL(5,2),
+    test_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
