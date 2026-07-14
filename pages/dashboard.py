@@ -17,7 +17,17 @@ def dashboard_page():
     # ---------------- Dashboard ----------------
 
     st.title("🛡️ OfficerPath")
-    st.success(f"Welcome {st.session_state.username} 👋")
+
+    st.markdown(
+        f"### Welcome back, **{st.session_state.username}** 👋"
+    )
+
+    st.caption(
+        f"🎯 Preparing for **{st.session_state.target_exam}**"
+    )
+
+    st.info("💡 Small progress every day leads to big success.")
+
     st.divider()
 
     total_sessions, total_minutes = get_dashboard_stats(
@@ -43,7 +53,7 @@ def dashboard_page():
             # ---------------- Mock Test ----------------
 
     # ---------------- Mock Test ----------------
-
+    st.header("🚀 Practice Zone")
     if "start_mock" not in st.session_state:
         st.session_state.start_mock = False
 
@@ -230,4 +240,9 @@ def dashboard_page():
     if st.button("🧠 Open AI Planner", use_container_width=True):
         st.session_state.ai_page = True
         st.rerun()
+    st.divider()
+
+    st.caption(
+        "OfficerPath v1.0 • Built with Python, Streamlit & PostgreSQL"
+    )
             

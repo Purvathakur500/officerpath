@@ -4,11 +4,18 @@ from database.queries import add_user
 
 def registration_page():
 
-    st.title("🛡️ OfficerPath")
+    st.title("🛡 OfficerPath")
+    st.subheader("Defence Exam Preparation Platform")
 
-    st.caption("AI-Powered Defence Aspirant Companion")
+    st.caption(
+        "Track your preparation, fitness and progress in one place."
+    )
 
     st.divider()
+
+    st.info(
+    "📌 Register once to save your study progress, mock tests and fitness logs."
+)
 
     st.subheader("👤 Register")
 
