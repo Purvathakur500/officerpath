@@ -12,6 +12,76 @@ st.set_page_config(
     page_icon="🛡️",
     layout="wide"
 )
+# ------------------- OfficerPath Military Theme -------------------
+
+st.markdown("""
+<style>
+
+/* Main App Background */
+.stApp {
+    background-color: #F4F5EE;
+}
+
+/* Sidebar */
+[data-testid="stSidebar"] {
+    background-color: #556B2F;
+}
+
+/* Sidebar text */
+[data-testid="stSidebar"] * {
+    color: white;
+}
+
+/* Buttons */
+.stButton > button {
+    background-color: #6B8E23;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+}
+
+.stButton > button:hover {
+    background-color: #4F6D1F;
+    color: white;
+}
+
+/* Input Boxes */
+.stTextInput input,
+.stNumberInput input,
+.stSelectbox div[data-baseweb="select"] {
+    background-color: white;
+    color: black;
+    border-radius: 8px;
+}
+
+/* Metrics */
+[data-testid="stMetric"] {
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #D6D6C2;
+}
+
+/* Headers */
+h1, h2, h3 {
+    color: #556B2F;
+}
+
+/* Success Box */
+[data-testid="stAlert"] {
+    border-radius: 10px;
+}
+
+/* Horizontal line */
+hr {
+    border-top: 2px solid #6B8E23;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+# -------------------------------------------------------------
 hide_streamlit_style = """
 <style>
     [data-testid="stSidebarNav"] {
