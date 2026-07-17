@@ -2,7 +2,7 @@
 
 A comprehensive Defence Exam Preparation Platform built using **Python**, **Streamlit**, and **PostgreSQL**. OfficerPath helps defence aspirants organize their preparation by tracking study sessions, practicing mock tests and previous year questions, monitoring fitness, and planning study schedules.
 
-🌐 **Live Demo:** https://YOUR-APP.streamlit.app
+🌐 **Live Demo:** (https://officerpath-3q2pibbs529zjbgzycvhek.streamlit.app/)
 
 💻 **GitHub Repository:** https://github.com/Purvathakur500/officerpath
 
