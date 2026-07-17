@@ -17,19 +17,30 @@ st.set_page_config(
 st.markdown("""
 <style>
 
-/* Main App Background */
-.stApp {
-    background-color: #F4F5EE;
-}
+
 
 /* Sidebar */
 [data-testid="stSidebar"] {
     background-color: #556B2F;
 }
 
-/* Sidebar text */
 [data-testid="stSidebar"] * {
-    color: white;
+    color: white !important;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: #556B2F !important;
+}
+
+/* Paragraphs & Labels */
+p, label, span {
+    color: #222222 !important;
+}
+
+/* Markdown text */
+.stMarkdown {
+    color: #222222 !important;
 }
 
 /* Buttons */
@@ -38,37 +49,43 @@ st.markdown("""
     color: white;
     border-radius: 10px;
     border: none;
-    font-weight: bold;
+    font-weight: 600;
+    transition: 0.3s;
 }
 
 .stButton > button:hover {
-    background-color: #4F6D1F;
+    background-color: #556B2F;
     color: white;
 }
 
-/* Input Boxes */
-.stTextInput input,
-.stNumberInput input,
+/* Selectbox */
 .stSelectbox div[data-baseweb="select"] {
-    background-color: white;
-    color: black;
+    background: white !important;
+    color: black !important;
     border-radius: 8px;
+}
+
+/* Text Input */
+.stTextInput input {
+    background: white !important;
+    color: black !important;
+}
+
+/* Number Input */
+.stNumberInput input {
+    background: white !important;
+    color: black !important;
 }
 
 /* Metrics */
 [data-testid="stMetric"] {
-    background-color: white;
-    border-radius: 10px;
-    padding: 10px;
-    border: 1px solid #D6D6C2;
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #D8D8C8;
 }
 
-/* Headers */
-h1, h2, h3 {
-    color: #556B2F;
-}
-
-/* Success Box */
+/* Alerts */
 [data-testid="stAlert"] {
     border-radius: 10px;
 }
@@ -76,6 +93,21 @@ h1, h2, h3 {
 /* Horizontal line */
 hr {
     border-top: 2px solid #6B8E23;
+}
+
+/* Hide Streamlit Header */
+header {
+    background: transparent;
+}
+
+/* Hide Streamlit Footer */
+footer {
+    visibility: hidden;
+}
+
+/* Hide Main Menu */
+#MainMenu {
+    visibility: hidden;
 }
 
 </style>
